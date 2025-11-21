@@ -1030,7 +1030,61 @@
                 </div>
             </div>
 
-            <!-- Slide 2: Instructor -->
+            <!-- Slide 2: How to Use This Presentation (Quick Guide for Experts) -->
+            <div class="slide" id="slide-2">
+                <h2 style="text-align: center; color: var(--health-teal); margin-bottom: 40px;">📝 How to Provide Feedback</h2>
+                
+                <div style="max-width: 900px; margin: 0 auto;">
+                    <div style="background: linear-gradient(135deg, #FFF9E6 0%, #FFF3D4 100%); padding: 30px; border-radius: 12px; border-left: 6px solid var(--response-gold); margin-bottom: 30px;">
+                        <h3 style="color: var(--tcd-blue); margin-top: 0; margin-bottom: 20px;">Quick Start Guide</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-dark);">
+                            This presentation has an interactive commenting system. You can highlight any text and add your expert feedback directly!
+                        </p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-top: 40px;">
+                        <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 4px solid var(--health-teal);">
+                            <div style="font-size: 2.5rem; margin-bottom: 12px;">1️⃣</div>
+                            <h4 style="color: var(--tcd-blue); margin-bottom: 12px;">Enable Commenting</h4>
+                            <p style="font-size: 0.95rem; line-height: 1.6;">Click the <strong>"📝 Enable Commenting"</strong> button in the top-right corner</p>
+                        </div>
+
+                        <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 4px solid var(--sdg-purple);">
+                            <div style="font-size: 2.5rem; margin-bottom: 12px;">2️⃣</div>
+                            <h4 style="color: var(--tcd-blue); margin-bottom: 12px;">Highlight Text</h4>
+                            <p style="font-size: 0.95rem; line-height: 1.6;">Use your mouse to <strong>select any text</strong> you want to comment on</p>
+                        </div>
+
+                        <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 4px solid var(--response-gold);">
+                            <div style="font-size: 2.5rem; margin-bottom: 12px;">3️⃣</div>
+                            <h4 style="color: var(--tcd-blue); margin-bottom: 12px;">Add Comment</h4>
+                            <p style="font-size: 0.95rem; line-height: 1.6;">Type your feedback in the box that appears and click <strong>"Add Comment"</strong></p>
+                        </div>
+
+                        <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 4px solid var(--peace-blue);">
+                            <div style="font-size: 2.5rem; margin-bottom: 12px;">4️⃣</div>
+                            <h4 style="color: var(--tcd-blue); margin-bottom: 12px;">Export When Done</h4>
+                            <p style="font-size: 0.95rem; line-height: 1.6;">Click <strong>"📥 Export All Comments"</strong> at the bottom and email the file</p>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, var(--accent-light) 0%, #f0f7fc 100%); padding: 24px; border-radius: 12px; margin-top: 40px; border: 2px solid var(--tcd-blue-light);">
+                        <h4 style="color: var(--tcd-blue); margin-top: 0; margin-bottom: 16px;">💡 Pro Tips:</h4>
+                        <ul style="margin-left: 24px; line-height: 2;">
+                            <li>Use <strong>arrow keys (← →)</strong> to navigate between slides quickly</li>
+                            <li>Your comments are <strong>saved automatically</strong> in your browser</li>
+                            <li>The highlighted text will <strong>stay visible</strong> while you type your comment</li>
+                            <li><strong>Don't forget to export</strong> your comments before closing!</li>
+                        </ul>
+                    </div>
+
+                    <p style="text-align: center; margin-top: 40px; font-size: 1.2rem; color: var(--text-medium);">
+                        Press <strong>→</strong> or click <strong>Next</strong> to begin reviewing
+                    </p>
+                </div>
+            </div>
+
+            <!-- Slide 3: Instructor -->
             <div class="slide" id="slide-2">
                 <h2>Instructor</h2>
                 
@@ -2073,7 +2127,7 @@
         <div class="navigation">
             <button class="nav-button" id="prev-btn" onclick="changeSlide(-1)">← Previous</button>
             <span class="slide-indicator">
-                <span id="current-slide">1</span> / <span id="total-slides">24</span>
+                <span id="current-slide">1</span> / <span id="total-slides">25</span>
             </span>
             <button class="nav-button" id="next-btn" onclick="changeSlide(1)">Next →</button>
         </div>
@@ -2118,7 +2172,7 @@
 
     <script>
         let currentSlide = 1;
-        const totalSlides = 24;  // Updated to include new instructor and learning outcomes slides
+        const totalSlides = 25;  // Updated to include How to Use slide
         let currentSlideshowSlide = 1;
 
         // Commenting System Variables
@@ -2251,6 +2305,10 @@
             
             if (selectedText.length > 0) {
                 selectionRange = selection.getRangeAt(0);
+                
+                // Highlight the selected text visually
+                highlightSelection(selectionRange);
+                
                 showCommentInput();
                 
                 // Open panel if not already open
@@ -2258,6 +2316,38 @@
                 if (!panel.classList.contains('open')) {
                     toggleCommentPanel();
                 }
+            }
+        }
+
+        function highlightSelection(range) {
+            // Remove any previous temporary highlight
+            removeTemporaryHighlight();
+            
+            // Create a span to highlight the selection
+            const span = document.createElement('span');
+            span.className = 'temp-highlight';
+            span.style.backgroundColor = '#fff3cd';
+            span.style.borderBottom = '2px solid #f39c12';
+            span.style.padding = '2px 0';
+            
+            try {
+                range.surroundContents(span);
+                // Store reference for later removal
+                window.currentTempHighlight = span;
+            } catch (e) {
+                // If surroundContents fails (complex selection), use different approach
+                console.log('Complex selection, using alternative highlight method');
+            }
+        }
+
+        function removeTemporaryHighlight() {
+            if (window.currentTempHighlight) {
+                const parent = window.currentTempHighlight.parentNode;
+                while (window.currentTempHighlight.firstChild) {
+                    parent.insertBefore(window.currentTempHighlight.firstChild, window.currentTempHighlight);
+                }
+                parent.removeChild(window.currentTempHighlight);
+                window.currentTempHighlight = null;
             }
         }
 
@@ -2277,6 +2367,7 @@
         function cancelComment() {
             hideCommentInput();
             window.getSelection().removeAllRanges();
+            removeTemporaryHighlight();
             selectedText = '';
             selectionRange = null;
         }
@@ -2303,8 +2394,9 @@
             renderComments();
             hideCommentInput();
             
-            // Clear selection
+            // Clear selection and remove highlight
             window.getSelection().removeAllRanges();
+            removeTemporaryHighlight();
             selectedText = '';
             selectionRange = null;
             
