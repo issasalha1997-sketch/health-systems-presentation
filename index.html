@@ -1,0 +1,2448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Systems - Lesson 2: Humanitarian Response</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Primary TCD Colors */
+            --tcd-blue: #003865;
+            --tcd-blue-light: #4A90E2;
+            --tcd-blue-lighter: #7BA8D1;
+            --tcd-blue-dark: #001F3F;
+            
+            /* Accent Colors - Thematic */
+            --health-green: #27AE60;
+            --health-teal: #16A085;
+            --crisis-red: #E74C3C;
+            --crisis-orange: #E67E22;
+            --sdg-purple: #9B59B6;
+            --education-indigo: #5D4E99;
+            --response-gold: #F39C12;
+            --peace-blue: #3498DB;
+            
+            /* Neutrals */
+            --background-light: #F8F9FA;
+            --accent-light: #E8F1F8;
+            --text-dark: #2C3E50;
+            --text-medium: #5A6C7D;
+            --text-light: #ffffff;
+            --border-color: #E0E6ED;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--tcd-blue-dark) 0%, var(--tcd-blue) 50%, var(--tcd-blue-light) 100%);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--tcd-blue-dark) 0%, var(--tcd-blue) 100%);
+            color: var(--text-light);
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--response-gold) 0%, var(--health-teal) 50%, var(--sdg-purple) 100%);
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 400;
+            letter-spacing: -0.5px;
+        }
+
+        .header .lesson-number {
+            font-size: 1rem;
+            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .slide-container {
+            flex: 1;
+            position: relative;
+            overflow-y: auto;
+            background: var(--background-light);
+        }
+
+        .slide-container::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .slide-container::-webkit-scrollbar-track {
+            background: var(--border-color);
+        }
+
+        .slide-container::-webkit-scrollbar-thumb {
+            background: var(--tcd-blue-light);
+            border-radius: 5px;
+        }
+
+        .slide-container::-webkit-scrollbar-thumb:hover {
+            background: var(--tcd-blue);
+        }
+
+        .slide {
+            display: none;
+            padding: 48px 80px;
+            height: 100%;
+            overflow-y: auto;
+            background: white;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .slide.active {
+            display: block;
+            animation: fadeInSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInSlide {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h2 {
+            color: var(--tcd-blue);
+            margin-bottom: 32px;
+            font-size: 2.5rem;
+            font-weight: 600;
+            border-bottom: 4px solid;
+            border-image: linear-gradient(90deg, var(--tcd-blue) 0%, var(--tcd-blue-light) 100%) 1;
+            padding-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .slide h3 {
+            color: var(--tcd-blue-light);
+            margin-top: 28px;
+            margin-bottom: 18px;
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        .slide h4 {
+            color: var(--tcd-blue);
+            margin-top: 16px;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .slide p, .slide li {
+            color: var(--text-dark);
+            line-height: 1.8;
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+
+        .slide ul {
+            margin-left: 32px;
+            margin-bottom: 20px;
+        }
+
+        .slide ul li {
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .slide ul li::marker {
+            color: var(--tcd-blue-light);
+        }
+
+        /* Instructor profiles */
+        .instructor-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin: 32px 0;
+        }
+
+        .instructor {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            border-left: 5px solid var(--health-teal);
+            box-shadow: 0 4px 12px rgba(0, 56, 101, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .instructor:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 56, 101, 0.15);
+        }
+
+        .instructor:nth-child(2) {
+            border-left-color: var(--sdg-purple);
+        }
+
+        .instructor h4 {
+            color: var(--tcd-blue);
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+        }
+
+        .instructor p {
+            font-size: 0.98rem;
+            line-height: 1.7;
+        }
+
+        .instructor strong {
+            color: var(--tcd-blue-light);
+        }
+
+        /* Learning outcomes */
+        .outcomes-list {
+            background: linear-gradient(135deg, var(--accent-light) 0%, #f0f7fc 100%);
+            padding: 32px;
+            border-radius: 12px;
+            margin: 24px 0;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .outcomes-list li {
+            margin-bottom: 14px;
+            padding-left: 8px;
+        }
+
+        /* Dropdown sections */
+        .dropdown-section {
+            margin: 24px 0;
+        }
+
+        .dropdown-header {
+            background: linear-gradient(135deg, var(--tcd-blue-light) 0%, var(--tcd-blue) 100%);
+            color: white;
+            padding: 18px 24px;
+            cursor: pointer;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 8px rgba(0, 56, 101, 0.15);
+        }
+
+        .dropdown-header:hover {
+            transform: translateX(8px);
+            box-shadow: 0 4px 16px rgba(0, 56, 101, 0.25);
+        }
+
+        .dropdown-header::after {
+            content: '▼';
+            transition: transform 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-header.active {
+            background: linear-gradient(135deg, var(--health-teal) 0%, var(--health-green) 100%);
+        }
+
+        .dropdown-header.active::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            border-left: 4px solid var(--tcd-blue-light);
+            padding: 0 24px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .dropdown-content.active {
+            max-height: 2000px;
+            padding: 24px;
+            border: 2px solid var(--border-color);
+            border-top: none;
+        }
+
+        /* Tab sections */
+        .tab-container {
+            margin: 28px 0;
+        }
+
+        .tab-headers {
+            display: flex;
+            gap: 12px;
+            border-bottom: 3px solid var(--border-color);
+            flex-wrap: wrap;
+            margin-bottom: 0;
+        }
+
+        .tab-header {
+            padding: 14px 28px;
+            background: var(--background-light);
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            border-radius: 10px 10px 0 0;
+            color: var(--text-medium);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: none;
+        }
+
+        .tab-header:hover {
+            background: var(--accent-light);
+            color: var(--tcd-blue);
+            transform: translateY(-2px);
+        }
+
+        .tab-header.active {
+            background: white;
+            color: var(--tcd-blue);
+            border-color: var(--tcd-blue-light);
+            border-bottom: 3px solid white;
+            margin-bottom: -3px;
+            box-shadow: 0 -2px 8px rgba(0, 56, 101, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 32px;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 10px 10px 10px;
+            min-height: 200px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeInSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Cards */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 28px 0;
+        }
+
+        .card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border-top: 5px solid var(--tcd-blue-light);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--tcd-blue-light) 0%, var(--health-teal) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 24px rgba(0, 56, 101, 0.18);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        /* Color coding for different card types */
+        .card:nth-child(4n+1) {
+            border-top-color: var(--health-teal);
+        }
+
+        .card:nth-child(4n+2) {
+            border-top-color: var(--sdg-purple);
+        }
+
+        .card:nth-child(4n+3) {
+            border-top-color: var(--response-gold);
+        }
+
+        .card:nth-child(4n+4) {
+            border-top-color: var(--peace-blue);
+        }
+
+        .card h4 {
+            color: var(--tcd-blue);
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+        }
+
+        .card.active {
+            background: linear-gradient(135deg, var(--accent-light) 0%, white 100%);
+        }
+
+        .card.active .card-content {
+            max-height: 1000px;
+            margin-top: 16px;
+            opacity: 1;
+        }
+
+        .card.active::after {
+            content: '▼';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--tcd-blue-light);
+            font-size: 1.2rem;
+            transform: rotate(180deg);
+        }
+
+        /* Image container */
+        .image-container {
+            text-align: center;
+            margin: 28px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-caption {
+            color: var(--text-medium);
+            font-style: italic;
+            margin-top: 12px;
+            font-size: 0.95rem;
+        }
+
+        /* Navigation */
+        .navigation {
+            background: linear-gradient(135deg, var(--tcd-blue-dark) 0%, var(--tcd-blue) 100%);
+            padding: 18px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, var(--tcd-blue-light) 0%, var(--health-teal) 100%);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button:hover:not(:disabled) {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .nav-button:disabled {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            cursor: not-allowed;
+            transform: scale(1);
+            opacity: 0.6;
+        }
+
+        .slide-indicator {
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        /* Slideshow container for Beirut Blast */
+        .slideshow-container {
+            position: relative;
+            margin: 28px 0;
+        }
+
+        .slideshow-slide {
+            display: none;
+            padding: 28px;
+            background: white;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .slideshow-slide.active {
+            display: block;
+            animation: fadeInSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slideshow-nav {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .slideshow-button {
+            background: linear-gradient(135deg, var(--tcd-blue-light) 0%, var(--tcd-blue) 100%);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .slideshow-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Quiz styles */
+        .quiz-question {
+            background: white;
+            padding: 28px;
+            margin: 24px 0;
+            border-radius: 12px;
+            border-left: 6px solid var(--sdg-purple);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .quiz-question:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .quiz-question h4 {
+            color: var(--tcd-blue);
+            margin-bottom: 18px;
+            font-size: 1.15rem;
+        }
+
+        .quiz-options {
+            margin-left: 24px;
+        }
+
+        .quiz-options li {
+            margin: 12px 0;
+            cursor: pointer;
+            padding: 14px 18px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: var(--background-light);
+            border: 2px solid transparent;
+        }
+
+        .quiz-options li:hover {
+            background: linear-gradient(135deg, var(--accent-light) 0%, var(--background-light) 100%);
+            border-color: var(--tcd-blue-light);
+            color: var(--tcd-blue);
+            transform: translateX(8px);
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 40px 50px;
+            }
+
+            .header, .navigation {
+                padding: 18px 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 12px;
+                padding: 16px 24px;
+            }
+
+            .header h1 {
+                font-size: 1.3rem;
+            }
+
+            .slide {
+                padding: 28px 24px;
+            }
+
+            .slide h2 {
+                font-size: 1.8rem;
+            }
+
+            .navigation {
+                padding: 12px 20px;
+            }
+
+            .instructor-container {
+                grid-template-columns: 1fr;
+            }
+
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-headers {
+                flex-direction: column;
+            }
+
+            .tab-header {
+                border-radius: 8px;
+            }
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFF3D4 100%);
+            border-left: 6px solid var(--response-gold);
+            padding: 24px;
+            margin: 24px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(243, 156, 18, 0.15);
+        }
+
+        .highlight-box strong {
+            color: var(--tcd-blue);
+        }
+
+        .highlight-box h3, .highlight-box h4 {
+            color: var(--tcd-blue);
+            margin-top: 0;
+        }
+
+        /* Diagram/flow chart styling */
+        .diagram-box {
+            background: white;
+            border: 3px solid var(--tcd-blue-light);
+            padding: 28px;
+            margin: 24px 0;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .diagram-box h4 {
+            color: var(--tcd-blue);
+            margin-bottom: 16px;
+        }
+
+        /* Blockquote styling */
+        blockquote {
+            background: var(--accent-light);
+            padding: 20px 24px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-style: italic;
+            color: var(--text-dark);
+        }
+
+        /* ============================================ */
+        /* COMMENTING SYSTEM STYLES */
+        /* ============================================ */
+
+        /* Comment Mode Toggle Button */
+        .comment-mode-toggle {
+            position: fixed;
+            top: 90px;
+            right: 30px;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--response-gold) 0%, #f39c12 100%);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .comment-mode-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+        }
+
+        .comment-mode-toggle.active {
+            background: linear-gradient(135deg, var(--health-green) 0%, #27ae60 100%);
+        }
+
+        /* Comment Panel */
+        .comment-panel {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .comment-panel.open {
+            right: 0;
+        }
+
+        .comment-panel-header {
+            background: linear-gradient(135deg, var(--tcd-blue-dark) 0%, var(--tcd-blue) 100%);
+            color: white;
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-panel-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .close-panel-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-panel-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .comment-panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .comment-panel-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .comment-panel-content::-webkit-scrollbar-track {
+            background: var(--background-light);
+        }
+
+        .comment-panel-content::-webkit-scrollbar-thumb {
+            background: var(--tcd-blue-light);
+            border-radius: 4px;
+        }
+
+        .comment-item {
+            background: var(--background-light);
+            padding: 16px;
+            margin-bottom: 16px;
+            border-radius: 10px;
+            border-left: 4px solid var(--tcd-blue-light);
+            transition: all 0.3s ease;
+        }
+
+        .comment-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateX(-4px);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .comment-slide-num {
+            background: var(--tcd-blue);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .comment-delete {
+            background: var(--crisis-red);
+            border: none;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .comment-delete:hover {
+            transform: scale(1.1);
+            background: #c0392b;
+        }
+
+        .comment-highlight {
+            background: #FFF9E6;
+            padding: 8px;
+            border-radius: 6px;
+            margin: 8px 0;
+            font-style: italic;
+            color: var(--text-medium);
+            border-left: 3px solid var(--response-gold);
+        }
+
+        .comment-text {
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-top: 8px;
+        }
+
+        .comment-timestamp {
+            font-size: 0.8rem;
+            color: var(--text-medium);
+            margin-top: 8px;
+        }
+
+        /* Comment Input Form */
+        .comment-input-area {
+            padding: 20px;
+            background: var(--background-light);
+            border-top: 2px solid var(--border-color);
+        }
+
+        .comment-input-area textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .comment-input-area textarea:focus {
+            outline: none;
+            border-color: var(--tcd-blue-light);
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .submit-comment-btn, .cancel-comment-btn {
+            flex: 1;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .submit-comment-btn {
+            background: linear-gradient(135deg, var(--health-teal) 0%, var(--health-green) 100%);
+            color: white;
+        }
+
+        .submit-comment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+        }
+
+        .cancel-comment-btn {
+            background: var(--border-color);
+            color: var(--text-dark);
+        }
+
+        .cancel-comment-btn:hover {
+            background: #d0d6dd;
+        }
+
+        /* Export Button */
+        .export-comments-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--sdg-purple) 0%, #8e44ad 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .export-comments-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+        }
+
+        /* Highlighted text in slides */
+        .user-highlight {
+            background: rgba(255, 235, 59, 0.4);
+            padding: 2px 4px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .user-highlight:hover {
+            background: rgba(255, 235, 59, 0.6);
+        }
+
+        /* Empty state */
+        .no-comments {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-medium);
+        }
+
+        .no-comments p {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        /* Instructions banner */
+        .instructions-banner {
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFF3D4 100%);
+            padding: 16px 20px;
+            margin: 16px 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--response-gold);
+        }
+
+        .instructions-banner h4 {
+            color: var(--tcd-blue);
+            margin: 0 0 8px 0;
+            font-size: 1rem;
+        }
+
+        .instructions-banner ol {
+            margin: 8px 0 0 20px;
+            padding: 0;
+        }
+
+        .instructions-banner li {
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="header">
+            <h1>Health Systems: Humanitarian Response</h1>
+            <span class="lesson-number">Lesson 2 of 8</span>
+        </div>
+
+        <div class="slide-container">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide active" id="slide-1">
+                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 80%; text-align: center;">
+                    <h2 style="font-size: 3rem; margin-bottom: 40px; border: none;">Health Care Systems and Coordinating Responses for Health Across SDG Clusters</h2>
+                    <p style="font-size: 1.8rem; color: var(--tcd-blue-light); margin-top: 20px;">Lesson 2 of 8</p>
+                    <div style="margin-top: 60px; padding: 20px 40px; background: linear-gradient(135deg, var(--accent-light) 0%, #f0f7fc 100%); border-radius: 12px; border: 2px solid var(--tcd-blue-light);">
+                        <p style="font-size: 1.2rem; color: var(--text-medium); margin: 0;">Master's Programme in Global Health</p>
+                        <p style="font-size: 1.1rem; color: var(--text-medium); margin-top: 8px;">Trinity College Dublin</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Instructor -->
+            <div class="slide" id="slide-2">
+                <h2>Instructor</h2>
+                
+                <div class="instructor-container" style="grid-template-columns: 1fr;">
+                    <div class="instructor">
+                        <h4>Dr. Philomena Raftery</h4>
+                        <p>Dr. Philomena Raftery is a microbiologist and global health expert with almost 25 years of experience in health systems and health emergency response at national and international levels. She holds a Master's in Molecular Pathology from TCD and a Doctorate in Global Public Health from the London School of Hygiene and Tropical Medicine.</p>
+                        
+                        <p>Phili currently serves as <strong>Senior Technical Officer in the WHO health emergencies programme</strong>, where she manages a team providing global leadership, coordination and technical assistance on laboratory systems and diagnostics for health emergencies. She promotes global evidence-based policies, guidance and training programmes that translate into meaningful impact at the country level.</p>
+                        
+                        <p>Over the past decade, she has supported multiple countries during humanitarian and public health emergency responses—including the ongoing conflict in Gaza, the global dengue emergency, the COVID-19 response in Cambodia, the 2023 Türkiye earthquake, and the 2014-16 Ebola epidemic in West Africa.</p>
+                        
+                        <p>Her doctoral research explored partnership models for epidemic response and gender-based violence coordination in humanitarian and public health emergencies. Before joining WHO, she was a specialist scientist in Ireland's national TB reference laboratory where she led translational research, innovation and genomic epidemiology.</p>
+                        
+                        <p>Phili has a strong record of publishing in peer-reviewed journals and has contributed to the design and delivery of numerous training programmes and operational research initiatives. She is deeply committed to gender equity and rights and is passionate about female leadership in global health.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Learning Outcomes -->
+            <div class="slide" id="slide-3">
+                <h2>Learning Outcomes</h2>
+                
+                <div class="outcomes-list">
+                    <ul>
+                        <li>Briefly describe the principle causes of humanitarian crises</li>
+                        <li>Analyse the key health needs in a humanitarian crisis by phase and by vulnerability status including women and girls</li>
+                        <li>Discuss how we can develop effective health responses in humanitarian settings</li>
+                        <li>Discuss the health response in view of the sustainable developmental goals</li>
+                        <li>Appreciate the guiding principles of the health response in humanitarian settings</li>
+                        <li>Identify the main actors in humanitarian settings</li>
+                        <li>List some of the targeted health responses</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 4: Challenges for Global Health -->
+            <div class="slide" id="slide-4">
+                <h2>Challenges for Global Health</h2>
+                
+                <div class="dropdown-section">
+                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                        Natural Hazard-Driven Disasters
+                    </div>
+                    <div class="dropdown-content">
+                        <p>Natural hazards include earthquakes, hurricanes, floods, droughts, or epidemics.</p>
+                        <h4>Examples:</h4>
+                        <ul>
+                            <li><strong>Pakistan Floods (2022):</strong> 33 million affected; malaria & cholera spikes</li>
+                            <li><strong>Horn of Africa Drought (2023):</strong> 31 million people affected by acute food insecurity and displacement</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dropdown-section">
+                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                        Conflict-Driven Disasters
+                    </div>
+                    <div class="dropdown-content">
+                        <p>Armed conflict can involve different types of armed actors:</p>
+                        <h4>Examples:</h4>
+                        <ul>
+                            <li><strong>Ukraine crisis (2022 → Ongoing):</strong> More than 2,600 attacks on healthcare</li>
+                            <li><strong>Occupied Palestinian Territory (2023-2025):</strong> Health system collapse classified as a Grade 3 emergency by the WHO</li>
+                            <li><strong>Beirut blast:</strong> Urban health-system shock</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dropdown-section">
+                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                        Global Injustice
+                    </div>
+                    <div class="dropdown-content">
+                        <div class="diagram-box">
+                            <p><strong>Systemic challenges include:</strong></p>
+                            <ul style="text-align: left;">
+                                <li>Inadequate global standards</li>
+                                <li>Incoherence in international response</li>
+                                <li>Inefficiency in resource allocation</li>
+                                <li>Blurred lines of responsibility</li>
+                                <li>Proliferating actors without coordination</li>
+                                <li>Lack of global strategy</li>
+                                <li>Hyper-pluralism</li>
+                                <li>Façade of altruism</li>
+                                <li>Fragmentation</li>
+                                <li>Neglect of health system development</li>
+                                <li>Undue influence from powerful countries and institutions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: The Sustainable Development Goals -->
+            <div class="slide" id="slide-5">
+                <h2>The Sustainable Development Goals (SDGs)</h2>
+                
+                <div class="highlight-box">
+                    <h3>The SDGs are:</h3>
+                    <ul>
+                        <li>A set of <strong>17 goals</strong> for the world's future, through 2030</li>
+                        <li>Negotiated over a two-year period at the United Nations</li>
+                        <li>Agreed to by nearly all of the world's nations on <strong>25 September 2015</strong></li>
+                    </ul>
+                </div>
+
+                <h3>Important Principles of the SDGs</h3>
+                
+                <div class="card-container">
+                    <div class="card" onclick="toggleCard(this)">
+                        <h4>🌍 Universality</h4>
+                        <div class="card-content">
+                            <p>Goals apply to every nation and every sector. Cities, businesses, schools, organizations - all are challenged to act.</p>
+                            <p><em>Why it matters:</em> The challenges of poverty, climate change, and inequality require a universal response from all nations from the global north and south.</p>
+                        </div>
+                    </div>
+
+                    <div class="card" onclick="toggleCard(this)">
+                        <h4>🔗 Integration</h4>
+                        <div class="card-content">
+                            <p>Goals are all interconnected in a system, and real-world problems are complex and don't fit in one category only.</p>
+                            <p>We cannot aim to achieve just one Goal. We must achieve them all (17 goals and 169 targets) since they depend on one another.</p>
+                        </div>
+                    </div>
+
+                    <div class="card" onclick="toggleCard(this)">
+                        <h4>🔄 Transformation</h4>
+                        <div class="card-content">
+                            <p>Achieving these goals involves making very big, fundamental changes in how we live on Earth.</p>
+                            <p>This requires systemic change across all sectors of society and economy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: SDGs Linked to Humanitarian Response -->
+            <div class="slide" id="slide-6">
+                <h2>SDGs Linked to Humanitarian Response</h2>
+                
+                <div class="card-container">
+                    <div class="card" onclick="toggleCard(this)">
+                        <h4>SDG #3: Healthy Lives</h4>
+                        <div class="card-content">
+                            <p><strong>Ensure healthy lives and promote well-being for all at all ages</strong></p>
+                            <p>Target 3.D: Strengthen the capacity of all countries, particularly developing countries, for early warning, risk reduction and management of national and global health risks</p>
+                        </div>
+                    </div>
+
+                    <div class="card" onclick="toggleCard(this)">
+                        <h4>SDG #5: Gender Equality</h4>
+                        <div class="card-content">
+                            <p><strong>Achieve gender equality and empower women and girls</strong></p>
+                            <ul>
+                                <li>5.1: End all forms of discrimination</li>
+                                <li>5.2: Eliminate all forms of violence against women and girls</li>
+                                <li>5.3: Eliminate harmful practices (child marriage, FGM)</li>
+                                <li>5.6: Ensure universal access to sexual and reproductive health</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card" onclick="toggleCard(this)">
+                        <h4>SDG #10: Reduced Inequalities</h4>
+                        <div class="card-content">
+                            <p><strong>Reduce inequality within and among countries</strong></p>
+                            <ul>
+                                <li>10.3: Ensure equal opportunity and reduce inequalities</li>
+                                <li>10.4: Adopt policies for greater equality</li>
+                                <li>10.7: Facilitate orderly, safe, regular and responsible migration</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card" onclick="toggleCard(this)">
+                        <h4>SDG #16: Peace & Justice</h4>
+                        <div class="card-content">
+                            <p><strong>Promote just, peaceful and inclusive societies</strong></p>
+                            <ul>
+                                <li>16.1: Significantly reduce all forms of violence</li>
+                                <li>16.2: End abuse, exploitation, trafficking of children</li>
+                                <li>16.9: Provide legal identity for all, including birth registration</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Impacts of Humanitarian Situations -->
+            <div class="slide" id="slide-7">
+                <h2>Impacts of Humanitarian Situations</h2>
+                
+                <div class="card-container">
+                    <div class="card">
+                        <h4>Direct Impacts</h4>
+                        <p>Examples include injury or death from the crisis itself.</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>Indirect Impacts</h4>
+                        <p>Examples include changes in living conditions, forced displacement, lack of legal protection, or decreased access to healthcare.</p>
+                    </div>
+                </div>
+
+                <div class="tab-container">
+                    <div class="tab-headers">
+                        <button class="tab-header active" onclick="openTab(event, 'determinants-tab')">Impact on Determinants of Health</button>
+                        <button class="tab-header" onclick="openTab(event, 'health-tab')">Impacts on Health</button>
+                        <button class="tab-header" onclick="openTab(event, 'healthcare-tab')">Impacts on Healthcare System</button>
+                    </div>
+
+                    <div id="determinants-tab" class="tab-content active">
+                        <ol>
+                            <li><strong>Sanitation and water</strong></li>
+                            <li><strong>Food</strong></li>
+                            <li><strong>Shelter</strong></li>
+                            <li><strong>Social instability</strong></li>
+                        </ol>
+                        <div class="highlight-box">
+                            <p>⚠️ Addressing one without the other is insufficient.</p>
+                            <p><strong>Focus on health and peace:</strong> Lack of access to basic social services can lead to marginalization and instability.</p>
+                        </div>
+                    </div>
+
+                    <div id="health-tab" class="tab-content">
+                        <ul>
+                            <li><strong>Increased morbidity and mortality</strong> due to immediate effects of conflict, including war-related injuries, sexual violence, forced labour, exploitation and unlawful detention</li>
+                            <li><strong>Mass displacement</strong> intensifies poor health conditions and increases prevalence of communicable diseases such as malaria and respiratory infections</li>
+                            <li><strong>Exposure to war-related atrocities</strong> contributes to increased prevalence of psychological disorders, including PTSD, depression and anxiety</li>
+                        </ul>
+                    </div>
+
+                    <div id="healthcare-tab" class="tab-content">
+                        <ul>
+                            <li>The great majority of humanitarian settings are in developing countries where health facilities, goods, and services are <strong>inadequate or essentially unavailable</strong></li>
+                            <li>Humanitarian crises can lead to <strong>destruction of health facilities</strong> and supplies, flight of health workers, and breakdown in services</li>
+                            <li><strong>Refugees/IDPs</strong> carry additional burdens in already resource-poor environments</li>
+                            <li>They <strong>compete with local residents</strong> for limited supplies and assistance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Severity of Humanitarian Situations -->
+            <div class="slide" id="slide-6">
+                <h2>Severity of Humanitarian Situations</h2>
+                
+                <p>The UN has three categories of emergencies:</p>
+
+                <div class="dropdown-section">
+                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                        Level 1: Localised Emergency
+                    </div>
+                    <div class="dropdown-content">
+                        <p>A localised emergency that can be managed with local resources.</p>
+                        <p><strong>Example:</strong> Boston marathon bombing</p>
+                    </div>
+                </div>
+
+                <div class="dropdown-section">
+                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                        Level 2: Larger Scale Emergency
+                    </div>
+                    <div class="dropdown-content">
+                        <p>An emergency at a larger scale but can still be dealt with within the capacity of the agencies, government and other actors present in-country.</p>
+                        <p><strong>Example:</strong> La Palma volcano eruption</p>
+                    </div>
+                </div>
+
+                <div class="dropdown-section">
+                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                        Level 3: International Response Required
+                    </div>
+                    <div class="dropdown-content">
+                        <p>The largest type of emergency that requires an international response, with the need for capacity and resources to be 'surged' into the country to help with the response.</p>
+                        <p><strong>Examples:</strong> Beirut blast, Syrian war, Tsunami</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Humanitarian Settings -->
+            <div class="slide" id="slide-7">
+                <h2>Humanitarian Settings</h2>
+                
+                <div class="tab-container">
+                    <div class="tab-headers">
+                        <button class="tab-header active" onclick="openTab(event, 'types-tab')">Types and Settlements</button>
+                        <button class="tab-header" onclick="openTab(event, 'camps-tab')">Camp/Informal Settlements</button>
+                        <button class="tab-header" onclick="openTab(event, 'urban-tab')">Urban Settings</button>
+                    </div>
+
+                    <div id="types-tab" class="tab-content active">
+                        <h3>Two types of displaced populations:</h3>
+                        <ul>
+                            <li><strong>Internally displaced</strong></li>
+                            <li><strong>Refugees</strong></li>
+                        </ul>
+                        
+                        <h3>In either case, they settle in:</h3>
+                        <ul>
+                            <li><strong>Camps/informal settlements</strong></li>
+                            <li><strong>Urban areas</strong></li>
+                        </ul>
+                    </div>
+
+                    <div id="camps-tab" class="tab-content">
+                        <ul>
+                            <li>Where displacement occurs <strong>within a country</strong> (internally displaced people), the <strong>International Organization for Migration (IOM)</strong> is often the lead agency in managing camps</li>
+                            <li>When displacement occurs <strong>across borders</strong> (refugees), <strong>UNHCR</strong> has the global mandate for protection and will lead or co-lead camp management with the government of the receiving country</li>
+                            <li>In refugee camps, you need to be aware of the rules and regulations for accessing and living on camp</li>
+                            <li>Some camps are fortified aid compounds, with secure offices and residential complexes, alongside restrictive security and travel protocols</li>
+                        </ul>
+                    </div>
+
+                    <div id="urban-tab" class="tab-content">
+                        <h4>Challenges:</h4>
+                        <ul>
+                            <li>Increased inequality</li>
+                            <li>Resource scarcity</li>
+                            <li>Competition with the host community</li>
+                            <li>Social conflict</li>
+                        </ul>
+                        
+                        <h4>Host community challenges:</h4>
+                        <ul>
+                            <li>Often underprivileged communities themselves</li>
+                            <li>Refugees in urban settings blend in with the host community, making it difficult to collect and track information about them</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 8: Phases of Humanitarian Response -->
+            <div class="slide" id="slide-8">
+                <h2>Phases of Humanitarian Response</h2>
+                
+                <p>There are different phases in humanitarian situations, especially for slow onset and protracted crises:</p>
+
+                <div class="dropdown-section">
+                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                        Under Fire Phase
+                    </div>
+                    <div class="dropdown-content">
+                        <ul>
+                            <li>Getting exposed to atrocities</li>
+                            <li>Being under direct shelling (war conflict)</li>
+                            <li>Losing shelters and livelihoods</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dropdown-section">
+                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                        During Displacement
+                    </div>
+                    <div class="dropdown-content">
+                        <p>People witness challenges in:</p>
+                        <ul>
+                            <li>Accessing shelter, food, and water</li>
+                            <li>Accessing immediate attention to injuries</li>
+                            <li>Accessing essential healthcare services</li>
+                            <li>Accessing medications</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dropdown-section">
+                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                        Protracted Crises
+                    </div>
+                    <div class="dropdown-content">
+                        <p>The average conflict lasts <strong>~17 years</strong> and leads to protracted crises which are devastating and have lifelong effects, particularly on the provision and sustainability of healthcare.</p>
+                        
+                        <h4>Challenges include:</h4>
+                        <ul>
+                            <li><strong>Sustainability of livelihood:</strong> shelter, food, water, hygiene, essential healthcare services (injury and rehabilitation, psychological support, chronic care)</li>
+                            <li><strong>Sources of income:</strong> cash assistance, employment, debts</li>
+                            <li><strong>Repatriation/immigration</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>Response by Phase</h3>
+                    <p><strong>Initial Phase:</strong> Access to life-saving healthcare is critical. Often local community addresses emerging issues (search and rescue, attending to injuries).</p>
+                    
+                    <p><strong>Transition Phase:</strong> Securing shelter, water and food. Treatment, prevention and palliative care.</p>
+                    
+                    <p><strong>Protracted Phase:</strong> Health promotion, prevention, treatment, rehabilitation and palliative care. Focus on other sectors (overcrowding, inadequate shelter, poor sanitation, insufficient water, reduced food security).</p>
+                </div>
+            </div>
+
+            <!-- Slide 9: Why Respond & Humanitarian Charter -->
+            <div class="slide" id="slide-9">
+                <h2>Why Do We Need to Respond?</h2>
+                
+                <div class="highlight-box">
+                    <p><strong>Everyone has the right to timely and appropriate service</strong></p>
+                    
+                    <h3>Grounded in the principles of the Humanitarian Charter:</h3>
+                    <ul>
+                        <li>Right to life with dignity</li>
+                        <li>Right to protection and security</li>
+                        <li>Right to receive humanitarian assistance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 10: HDP Nexus -->
+            <div class="slide" id="slide-10">
+                <h2>Guiding Principles: The HDP Nexus</h2>
+                
+                <div class="highlight-box">
+                    <h3>Humanitarian – Development – Peace Nexus (Triple Nexus)</h3>
+                    <p>The HDP nexus connects short-term emergency help with long-term development and peacebuilding.</p>
+                </div>
+
+                <p>Instead of working separately:</p>
+                <ul>
+                    <li><strong>Humanitarian workers</strong> provide emergency healthcare, food, and shelter</li>
+                    <li><strong>Development actors</strong> strengthen health systems, education, and livelihoods</li>
+                    <li><strong>Peacebuilders</strong> reduce conflict and promote trust and stability</li>
+                </ul>
+
+                <div class="diagram-box">
+                    <h4>Core Concept:</h4>
+                    <p>Health services should be equally, continuously and resiliently delivered.</p>
+                </div>
+
+                <div class="dropdown-section">
+                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                        Guiding Principles for Implementation
+                    </div>
+                    <div class="dropdown-content">
+                        <p><strong>Interventions should apply:</strong></p>
+                        <ul>
+                            <li>Early recovery approaches at the onset of acute emergencies</li>
+                            <li>Long-term vision during protracted emergencies</li>
+                            <li>Seek integration with existing health services and transition of governance to local authorities</li>
+                            <li>Address bottlenecks in health systems that can constrain humanitarian response</li>
+                        </ul>
+                        
+                        <p><strong>Implementation needs to be supported by:</strong></p>
+                        <ul>
+                            <li>Predictable and flexible humanitarian and development funding</li>
+                            <li>Coordination and dialogue between all partners</li>
+                            <li>Mapping of financing flows including non-traditional donor groups</li>
+                        </ul>
+                        
+                        <p><strong>In conflict-affected settings:</strong> Interventions should be designed so they do not exacerbate root causes of conflict and where possible contribute to peacebuilding.</p>
+                    </div>
+                </div>
+
+                <div class="dropdown-section">
+                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                        Early Recovery Approach
+                    </div>
+                    <div class="dropdown-content">
+                        <p>Early recovery is an approach that addresses recovery needs that arise during the emergency, using humanitarian mechanisms aligned with development principles.</p>
+                        
+                        <p>It enables people to use the benefits of humanitarian action to seize development opportunities, builds resilience, and establishes a sustainable process of recovery from crisis.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 11: Actors in Humanitarian Response -->
+            <div class="slide" id="slide-11">
+                <h2>Actors in Humanitarian Response</h2>
+                
+                <div class="tab-container">
+                    <div class="tab-headers">
+                        <button class="tab-header active" onclick="openTab(event, 'categories-actors')">Categories</button>
+                        <button class="tab-header" onclick="openTab(event, 'affected-pop')">Crisis-Affected Populations</button>
+                        <button class="tab-header" onclick="openTab(event, 'coordination')">Coordination</button>
+                    </div>
+
+                    <div id="categories-actors" class="tab-content active">
+                        <p>The actors can be generally grouped into five categories:</p>
+                        <ul>
+                            <li><strong>UN agencies</strong></li>
+                            <li><strong>Red Cross and Red Crescent Movement</strong></li>
+                            <li><strong>Non-governmental organisations (NGOs) and civil society organisations (CSOs)</strong></li>
+                            <li><strong>Governments</strong></li>
+                            <li><strong>Non-traditional actors</strong> (everybody else!)</li>
+                        </ul>
+                    </div>
+
+                    <div id="affected-pop" class="tab-content">
+                        <p>Crisis-affected populations are sometimes the target group for humanitarian assistance, but <strong>they are also the first responders</strong> to humanitarian crises.</p>
+                        
+                        <p>This includes:</p>
+                        <ul>
+                            <li>Local citizens</li>
+                            <li>Municipal government workers</li>
+                            <li>Community-based and faith-based organisation staff</li>
+                            <li>Volunteers</li>
+                            <li>Social entrepreneurs</li>
+                            <li>And others</li>
+                        </ul>
+                    </div>
+
+                    <div id="coordination" class="tab-content">
+                        <p><strong>Ultimately governments are responsible for their citizens in the wake of an emergency.</strong></p>
+                        
+                        <ul>
+                            <li>Some governments have National Disaster Management Authorities, others have different government bodies that respond</li>
+                            <li>In some cases, the UN will take on the role of leading a humanitarian response</li>
+                            <li>Where the UN takes the lead role, coordination of humanitarian action is the mandate of the <strong>UN Office for the Coordination of Humanitarian Affairs (UN OCHA)</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 12: Minimum Standards -->
+            <div class="slide" id="slide-12">
+                <h2>Minimum Standards in Humanitarian Response</h2>
+                
+                <div class="card-container">
+                    <div class="card" onclick="toggleCard(this)">
+                        <h4>Standard 1.1: Health Service Delivery</h4>
+                        <div class="card-content">
+                            <p>People have access to integrated quality healthcare that is <strong>safe, effective and patient-centred</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="card" onclick="toggleCard(this)">
+                        <h4>Standard 1.2: Healthcare Workforce</h4>
+                        <div class="card-content">
+                            <p>People have access to healthcare workers with <strong>adequate skills at all levels of healthcare</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="card" onclick="toggleCard(this)">
+                        <h4>Standard 1.3: Essential Medicines</h4>
+                        <div class="card-content">
+                            <p>People have access to <strong>essential medicines and medical devices</strong> that are safe, effective and of assured quality.</p>
+                        </div>
+                    </div>
+
+                    <div class="card" onclick="toggleCard(this)">
+                        <h4>Standard 1.4: Health Financing</h4>
+                        <div class="card-content">
+                            <p>People have access to <strong>free priority healthcare</strong> for the duration of the crisis.</p>
+                        </div>
+                    </div>
+
+                    <div class="card" onclick="toggleCard(this)">
+                        <h4>Standard 1.5: Health Information</h4>
+                        <div class="card-content">
+                            <p>Healthcare is guided by evidence through the <strong>collection, analysis and use of relevant public health data</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 13: Essential Healthcare - Overview -->
+            <div class="slide" id="slide-13">
+                <h2>Essential Minimum Healthcare</h2>
+                
+                <p>This section outlines the essential minimum healthcare in key areas of humanitarian situation response:</p>
+                
+                <div class="card-container">
+                    <div class="card">
+                        <h4>🏥 Trauma and Injury</h4>
+                    </div>
+                    <div class="card">
+                        <h4>🦠 Communicable Diseases</h4>
+                    </div>
+                    <div class="card">
+                        <h4>👶 Child Health</h4>
+                    </div>
+                    <div class="card">
+                        <h4>🤰 Sexual and Reproductive Health</h4>
+                    </div>
+                    <div class="card">
+                        <h4>🧠 Mental Health</h4>
+                    </div>
+                    <div class="card">
+                        <h4>💊 Non-Communicable Diseases</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 14: Trauma and Communicable Diseases -->
+            <div class="slide" id="slide-14">
+                <h2>Essential Healthcare: Trauma & Communicable Diseases</h2>
+                
+                <div class="tab-container">
+                    <div class="tab-headers">
+                        <button class="tab-header active" onclick="openTab(event, 'trauma-tab')">Trauma and Injury</button>
+                        <button class="tab-header" onclick="openTab(event, 'communicable-tab')">Communicable Diseases</button>
+                    </div>
+
+                    <div id="trauma-tab" class="tab-content active">
+                        <ul>
+                            <li><strong>Provide care for trauma at all levels</strong> for all patients
+                                <ul>
+                                    <li>Quickly establish safe referral systems between facilities</li>
+                                    <li>Establish mobile clinics or field hospitals if fixed structures are not accessible</li>
+                                </ul>
+                            </li>
+                            <li><strong>Ensure healthcare workers have the skills and knowledge</strong> to address injuries
+                                <ul>
+                                    <li>Include all levels from first responders to those providing definitive surgical and anaesthetics care</li>
+                                </ul>
+                            </li>
+                            <li><strong>Establish or strengthen standardised protocols</strong> for triage and injury and trauma care</li>
+                            <li><strong>Ensure timely access</strong> to mental health services and psychosocial support</li>
+                            <li><strong>Establish or strengthen health information systems</strong> to include injury and trauma data</li>
+                        </ul>
+                    </div>
+
+                    <div id="communicable-tab" class="tab-content">
+                        <p><strong>Objective:</strong> Prevent communicable diseases from the beginning, manage any cases, and ensure rapid and appropriate response if there is an outbreak.</p>
+                        
+                        <h4>Key Actions:</h4>
+                        <ul>
+                            <li>Determine the risk of communicable diseases (risk assessment)</li>
+                            <li>Work with other sectors to develop general prevention measures and establish integrated health promotion programmes at community level
+                                <ul>
+                                    <li>Address specific fears, rumours and common beliefs</li>
+                                    <li>Coordinate with hygiene promoters, community nutrition workers</li>
+                                </ul>
+                            </li>
+                            <li>Implement disease-specific prevention measures as needed</li>
+                        </ul>
+                        
+                        <div class="highlight-box">
+                            <p><strong>Example:</strong> COVID-19 & Beirut Blast responses highlight coordination with WASH and risk communication</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 15: Child Health -->
+            <div class="slide" id="slide-15">
+                <h2>Essential Healthcare: Child Health</h2>
+                
+                <div class="tab-container">
+                    <div class="tab-headers">
+                        <button class="tab-header active" onclick="openTab(event, 'child-health-tab')">Child Health</button>
+                        <button class="tab-header" onclick="openTab(event, 'vaccination-tab')">Vaccination</button>
+                        <button class="tab-header" onclick="openTab(event, 'development-tab')">Development & Nutrition</button>
+                    </div>
+
+                    <div id="child-health-tab" class="tab-content active">
+                        <p>Programmes should address the major causes of morbidity and mortality.</p>
+                        
+                        <h4>Globally these risks are:</h4>
+                        <ul>
+                            <li>Acute respiratory infections</li>
+                            <li>Diarrhoea</li>
+                            <li>Measles</li>
+                            <li>Malaria</li>
+                            <li>Malnutrition</li>
+                            <li>Neonatal causes of morbidity and mortality</li>
+                        </ul>
+                    </div>
+
+                    <div id="vaccination-tab" class="tab-content">
+                        <ul>
+                            <li><strong>Determine</strong> whether there is a need for vaccinations, and the appropriate approach for the emergency</li>
+                            <li><strong>Conduct a mass measles vaccination campaign</strong> for children aged six months to 15 years, regardless of measles vaccination history, when estimated measles coverage is less than 90% or unknown</li>
+                            <li><strong>Screen children</strong> attending healthcare facilities or mobile clinics for vaccination status and administer any needed vaccinations</li>
+                        </ul>
+                    </div>
+
+                    <div id="development-tab" class="tab-content">
+                        <p><strong>Screen children for their growth and nutritional status.</strong></p>
+                        
+                        <ul>
+                            <li>Refer all malnourished children to nutritional services</li>
+                            <li>Provide facility-based treatment for children suffering from severe acute malnutrition with complications</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 16: Sexual and Reproductive Health -->
+            <div class="slide" id="slide-16">
+                <h2>Essential Healthcare: Sexual & Reproductive Health</h2>
+                
+                <div class="highlight-box">
+                    <p>Sexual and reproductive healthcare must <strong>respect cultural backgrounds and religious beliefs</strong> while meeting universally recognised international human rights standards.</p>
+                    
+                    <p><strong>⚠️ Emergencies elevate risks of sexual violence</strong>, including exploitation and abuse. All actors should work together to prevent and respond, in close coordination with the protection sector.</p>
+                </div>
+
+                <div class="tab-container">
+                    <div class="tab-headers">
+                        <button class="tab-header active" onclick="openTab(event, 'anc-pnc-tab')">ANC & PNC</button>
+                        <button class="tab-header" onclick="openTab(event, 'gbv-tab')">Gender-Based Violence</button>
+                    </div>
+
+                    <div id="anc-pnc-tab" class="tab-content active">
+                        <ul>
+                            <li><strong>Provide all visibly pregnant women</strong> with clean delivery packages when access to skilled health providers and healthcare facilities cannot be guaranteed</li>
+                            <li><strong>Make a range of contraceptive methods available</strong> at healthcare facilities based on demand, in a private and confidential setting
+                                <ul>
+                                    <li>Long-acting reversible and short-acting methods</li>
+                                    <li>Provide counselling that emphasises informed choice and effectiveness</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div id="gbv-tab" class="tab-content">
+                        <ul>
+                            <li><strong>Reduce the risk of sexual violence</strong>, ensure referrals and provide holistic support to survivors
+                                <ul>
+                                    <li>Coordinate with other sectors to strengthen prevention and response</li>
+                                </ul>
+                            </li>
+                            <li><strong>Inform the community</strong> of available services and the importance of seeking immediate medical care following sexual violence</li>
+                            <li><strong>Make clinical care and referral</strong> to other supportive services available for survivors of sexual violence</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 17: Mental Health -->
+            <div class="slide" id="slide-17">
+                <h2>Essential Healthcare: Mental Health</h2>
+                
+                <div class="highlight-box">
+                    <p>Mental health and psychosocial problems are common among adults, adolescents and children in all humanitarian settings.</p>
+                    
+                    <p>The extreme stressors associated with crises place people at <strong>increased risk of social, behavioural, psychological and psychiatric problems</strong>.</p>
+                </div>
+
+                <h3>Key Interventions:</h3>
+                
+                <ul>
+                    <li><strong>Mental health and psychosocial support involves multi-sectoral actions</strong></li>
+                    <li><strong>Coordinate</strong> mental health and psychosocial supports across sectors</li>
+                    <li><strong>Work with community members</strong>, including marginalised people, to strengthen community self-help and social support</li>
+                    <li><strong>Orient staff and volunteers</strong> on how to offer psychological first aid</li>
+                    <li><strong>Make basic clinical mental healthcare available</strong> at every healthcare facility</li>
+                </ul>
+
+                <div class="dropdown-section">
+                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                        Psychological First Aid
+                    </div>
+                    <div class="dropdown-content">
+                        <p>Psychological first aid needs to be available to people exposed to potentially traumatic events such as physical or sexual violence, witnessing atrocities and experiencing major injuries.</p>
+                        
+                        <p><strong>This is not a clinical intervention.</strong> It is a basic, humane and supportive response to suffering.</p>
+                        
+                        <div class="highlight-box">
+                            <p><strong>Example:</strong> MSF clinic in Beirut provided psychological first aid following the blast</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dropdown-section">
+                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                        Clinical Mental Healthcare
+                    </div>
+                    <div class="dropdown-content">
+                        <p>Brief all health staff and volunteers about available mental healthcare.</p>
+                        <p>Train health providers according to evidence-based protocols.</p>
+                        <p><strong>Mental Health Gap (mhGAP)</strong> intervention guide provides evidence-based protocols</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 18: Non-Communicable Diseases -->
+            <div class="slide" id="slide-18">
+                <h2>Essential Healthcare: Non-Communicable Diseases</h2>
+                
+                <div class="highlight-box">
+                    <p><strong>Within an average adult population of 10,000 people, there are likely to be:</strong></p>
+                    <ul>
+                        <li>1,500–3,000 people with hypertension</li>
+                        <li>500–2,000 with diabetes</li>
+                        <li>3–8 acute heart attacks over a normal 90-day period</li>
+                    </ul>
+                </div>
+
+                <h3>Common NCDs in Humanitarian Settings:</h3>
+                <ul>
+                    <li>Diabetes</li>
+                    <li>Cardiovascular disease (including hypertension, heart failure, strokes, chronic kidney disease)</li>
+                    <li>Chronic lung disease (such as asthma and COPD)</li>
+                    <li>Cancer</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <h4>Behavioural Risk Factors:</h4>
+                    <p>Tobacco smoking and unhealthy diets contribute to NCD burden</p>
+                </div>
+
+                <h3>Response Strategy:</h3>
+                <p><strong>Initial response should manage acute complications and avoid treatment interruption</strong>, followed by more comprehensive programmes.</p>
+                
+                <p>Mental health and palliative care are specifically addressed as part of NCD care.</p>
+            </div>
+
+            <!-- Slide 19: Case Study - Beirut Blast Intro -->
+            <div class="slide" id="slide-19">
+                <h2>Case Study: Beirut Blast</h2>
+                
+                <div class="highlight-box">
+                    <h3>August 4, 2020 at 6:08 PM</h3>
+                    <ul>
+                        <li><strong>218 killed</strong></li>
+                        <li><strong>More than 6,000 injured</strong></li>
+                        <li><strong>Half of Beirut city was destroyed</strong></li>
+                        <li><strong>50% of healthcare centers functional</strong></li>
+                    </ul>
+                </div>
+
+                <div class="slideshow-container">
+                    <div class="slideshow-slide active">
+                        <h3>Immediate Response</h3>
+                        <ul>
+                            <li>Formal organizations such as civil defense, Lebanese Red Cross, EMS responded immediately</li>
+                            <li>Frantic search for survivors</li>
+                            <li><strong>Personal initiatives:</strong> Pamela the nurse and the three babies</li>
+                            <li>The day after: hundreds-thousands took to the street for clean-up</li>
+                            <li>Mobile clinics were deployed to offer services to the wounded</li>
+                        </ul>
+                    </div>
+
+                    <div class="slideshow-slide">
+                        <h3>INGOs & NGOs Response</h3>
+                        <p><strong>INGOs & NGOs provided:</strong></p>
+                        <ul>
+                            <li>Shelter, Food & Water</li>
+                            <li>Mental health support</li>
+                            <li>COVID-19 PPEs</li>
+                        </ul>
+                        
+                        <div class="highlight-box">
+                            <p><strong>MSF Medical Activities:</strong></p>
+                            <ul>
+                                <li>265 injured cared for</li>
+                                <li>852 people suffering from non-communicable diseases</li>
+                                <li>50 benefited from consultations</li>
+                                <li>500 provided with COVID-19 tests</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="slideshow-slide">
+                        <h3>Early Recovery Response</h3>
+                        <p><strong>Khaddit Beirut was formed</strong></p>
+                        <p>Four initiatives:</p>
+                        <ul>
+                            <li><strong>Education</strong></li>
+                            <li><strong>Community Health</strong> - In collaboration with the Primary Healthcare Department of the Ministry of Health, working on comprehensive plan for evaluating health services and assessing community healthcare needs</li>
+                            <li><strong>SMEs</strong></li>
+                            <li><strong>Environment</strong></li>
+                        </ul>
+                    </div>
+
+                    <div class="slideshow-slide">
+                        <h3>Peacebuilding Response</h3>
+                        <p>From feminist activist Shirine Jurdi, specializing in peacebuilding and gender:</p>
+                        
+                        <blockquote style="font-style: italic; border-left: 4px solid var(--tcd-light-blue); padding-left: 20px; margin: 20px 0;">
+                            "Peacebuilders quickly transformed their devastation into action. They reached out to the international community, lobbied and raised awareness about the Lebanese population's right to protection against criminal negligence."
+                        </blockquote>
+                        
+                        <p><strong>The scale of work expanded to encompass:</strong></p>
+                        <ul>
+                            <li>Relief efforts</li>
+                            <li>Reconstruction</li>
+                            <li>Environmental action</li>
+                            <li>Psychological counseling</li>
+                        </ul>
+                        
+                        <p><em>New-comers including doctors, psychiatrists, teachers, students, architects, artists and lawyers organized themselves into associations - they had no time for useless paper-work!</em></p>
+                    </div>
+
+                    <div class="slideshow-nav">
+                        <button class="slideshow-button" onclick="changeSlideshowSlide(-1)">← Previous</button>
+                        <button class="slideshow-button" onclick="changeSlideshowSlide(1)">Next →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 20: Quiz -->
+            <div class="slide" id="slide-20">
+                <h2>Knowledge Check: Quiz</h2>
+                
+                <div class="quiz-question">
+                    <h4>Question 1: What is most likely to occur during the early recovery following a disaster?</h4>
+                    <ul class="quiz-options">
+                        <li>a) First responders work tirelessly to save others</li>
+                        <li>b) Survivors share their stories</li>
+                        <li>c) Medical personnel experience exhaustion</li>
+                        <li>d) Community organizations rebuild the community ✓</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 2: An international agency is most likely to start funds for food relief and disaster relief during which phase?</h4>
+                    <ul class="quiz-options">
+                        <li>a) Under fire phase when search and rescue operations are in progress</li>
+                        <li>b) During displacement when the displaced and refugees are transitioning to a safer location</li>
+                        <li>c) During protracted phase when the displaced and refugees are settled ✓</li>
+                        <li>d) During repatriation</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 3: Which statement about disasters is true?</h4>
+                    <ul class="quiz-options">
+                        <li>a) They can be natural or human-made ✓</li>
+                        <li>b) They can be relieved without assistance</li>
+                        <li>c) There is always injury and death when a disaster occurs</li>
+                        <li>d) The timing of a disaster does not influence the types of injuries that will occur</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 4: Which organization would be the main actor in the protection of the displaced and refugees?</h4>
+                    <ul class="quiz-options">
+                        <li>a) United Nations Children's Fund (UNICEF)</li>
+                        <li>b) World Food Program (WFP)</li>
+                        <li>c) Centers for Disease Control and Prevention (CDC)</li>
+                        <li>d) United Nations High Commissioner for Refugees (UNHCR) ✓</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 21: Quiz Continued -->
+            <div class="slide" id="slide-21">
+                <h2>Knowledge Check: Quiz (Continued)</h2>
+                
+                <div class="quiz-question">
+                    <h4>Question 5: What is the one standard specifically addressing the importance of documentation?</h4>
+                    <ul class="quiz-options">
+                        <li>a) Health service delivery</li>
+                        <li>b) Healthcare workforce</li>
+                        <li>c) Health information ✓</li>
+                        <li>d) Essential medicines and medical devices</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 6: The health service response to displaced and refugees needs to secure the following standards (check all that apply):</h4>
+                    <ul class="quiz-options">
+                        <li>✓ Health service delivery</li>
+                        <li>✓ Healthcare workforce</li>
+                        <li>✓ Health information</li>
+                        <li>✓ Health financing</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 7: Which is a targeted sexual and reproductive health service for displaced and refugees?</h4>
+                    <ul class="quiz-options">
+                        <li>a) Improve nutrition</li>
+                        <li>b) Gender-based violence ✓</li>
+                        <li>c) Advocate for increased funding for reproductive services</li>
+                        <li>d) Increase vaccination</li>
+                    </ul>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 8: Which strategy would be the most effective public health strategy to increase vaccination coverage?</h4>
+                    <ul class="quiz-options">
+                        <li>a) Share morbidity reports with healthcare providers</li>
+                        <li>b) Require vaccinations before going to public school</li>
+                        <li>c) Screen children attending healthcare facilities or mobile clinics for vaccination status and administer any needed vaccinations ✓</li>
+                        <li>d) Lead teams to enforce laws related to immunizations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Slide 22: Summary -->
+            <div class="slide" id="slide-22">
+                <h2>Summary</h2>
+                
+                <div class="highlight-box">
+                    <h3>Key Takeaways:</h3>
+                    <ul>
+                        <li>Humanitarian crises arise from natural disasters, conflicts, and global injustice</li>
+                        <li>The SDGs provide a framework for addressing humanitarian needs holistically</li>
+                        <li>Health impacts occur across determinants, direct health outcomes, and healthcare systems</li>
+                        <li>The HDP Nexus integrates humanitarian, development, and peacebuilding efforts</li>
+                        <li>Multiple actors collaborate in humanitarian response, with coordination being crucial</li>
+                        <li>Minimum standards ensure quality and equity in health service delivery</li>
+                        <li>Essential healthcare covers trauma, communicable diseases, child health, SRH, mental health, and NCDs</li>
+                        <li>Early recovery and long-term resilience are critical for sustainable outcomes</li>
+                    </ul>
+                </div>
+
+                <p style="text-align: center; margin-top: 40px; font-size: 1.3rem; color: var(--tcd-blue);">
+                    <strong>Thank you for your attention!</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- Commenting System UI -->
+        <button class="comment-mode-toggle" onclick="toggleCommentMode()" id="comment-toggle">
+            💬 Enable Comments
+        </button>
+
+        <div class="comment-panel" id="comment-panel">
+            <div class="comment-panel-header">
+                <h3>Comments & Feedback</h3>
+                <button class="close-panel-btn" onclick="toggleCommentPanel()">×</button>
+            </div>
+            
+            <div class="comment-panel-content" id="comments-list">
+                <div class="instructions-banner">
+                    <h4>How to Use:</h4>
+                    <ol>
+                        <li>Click "Enable Comments" button</li>
+                        <li>Select any text on the slides</li>
+                        <li>A comment box will appear</li>
+                        <li>Type your feedback and submit</li>
+                        <li>View all comments here</li>
+                    </ol>
+                </div>
+                
+                <div class="no-comments" id="no-comments-msg">
+                    <p>📝 No comments yet</p>
+                    <p style="font-size: 0.9rem;">Select text and add your first comment!</p>
+                </div>
+            </div>
+            
+            <div class="comment-input-area" id="comment-input-area" style="display: none;">
+                <textarea id="comment-textarea" placeholder="Enter your comment or feedback..."></textarea>
+                <div class="comment-actions">
+                    <button class="submit-comment-btn" onclick="submitComment()">Submit</button>
+                    <button class="cancel-comment-btn" onclick="cancelComment()">Cancel</button>
+                </div>
+            </div>
+            
+            <div style="padding: 20px;">
+                <button class="export-comments-btn" onclick="exportComments()">📥 Export All Comments</button>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" id="prev-btn" onclick="changeSlide(-1)">← Previous</button>
+            <span class="slide-indicator">
+                <span id="current-slide">1</span> / <span id="total-slides">24</span>
+            </span>
+            <button class="nav-button" id="next-btn" onclick="changeSlide(1)">Next →</button>
+        </div>
+    </div>
+
+    <!-- Commenting System UI -->
+    <!-- Comment Mode Toggle Button -->
+    <button class="comment-mode-toggle" id="comment-mode-toggle" onclick="toggleCommentMode()">
+        📝 Enable Commenting
+    </button>
+
+    <!-- Comments Panel (Sidebar) -->
+    <div class="comment-panel" id="comment-panel">
+        <div class="comment-panel-header">
+            <h3>Comments & Feedback</h3>
+            <button class="close-panel-btn" onclick="toggleCommentPanel()">✕</button>
+        </div>
+
+        <div class="comment-input-area" id="comment-input-area" style="display: none;">
+            <div class="selected-text-display" id="selected-text-display"></div>
+            <textarea 
+                id="comment-textarea" 
+                placeholder="Enter your comment or feedback here..."
+                rows="4"
+            ></textarea>
+            <div class="comment-input-actions">
+                <button class="cancel-comment-btn" onclick="cancelComment()">Cancel</button>
+                <button class="submit-comment-btn" onclick="submitComment()">Add Comment</button>
+            </div>
+        </div>
+
+        <div class="comments-list" id="comments-list">
+            <div class="no-comments">
+                <p>👆 Enable commenting mode and select text to add feedback</p>
+            </div>
+        </div>
+
+        <button class="export-comments-btn" onclick="exportComments()">
+            📥 Export All Comments
+        </button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 24;  // Updated to include new instructor and learning outcomes slides
+        let currentSlideshowSlide = 1;
+
+        // Commenting System Variables
+        let commentMode = false;
+        let selectedText = '';
+        let selectionRange = null;
+        let comments = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSlideDisplay();
+            loadComments();
+            renderComments();
+        });
+
+        // ============================================
+        // SLIDE NAVIGATION
+        // ============================================
+
+        function changeSlide(direction) {
+            const slides = document.querySelectorAll('.slide');
+            slides[currentSlide - 1].classList.remove('active');
+            
+            currentSlide += direction;
+            
+            if (currentSlide > totalSlides) currentSlide = totalSlides;
+            if (currentSlide < 1) currentSlide = 1;
+            
+            slides[currentSlide - 1].classList.add('active');
+            updateSlideDisplay();
+            
+            // Scroll to top of slide
+            document.querySelector('.slide-container').scrollTop = 0;
+        }
+
+        function updateSlideDisplay() {
+            document.getElementById('current-slide').textContent = currentSlide;
+            document.getElementById('prev-btn').disabled = currentSlide === 1;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides;
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // ============================================
+        // DROPDOWN, TAB, CARD FUNCTIONALITY
+        // ============================================
+
+        function toggleDropdown(element) {
+            element.classList.toggle('active');
+            const content = element.nextElementSibling;
+            content.classList.toggle('active');
+        }
+
+        function openTab(evt, tabName) {
+            const tabContainer = evt.target.closest('.tab-container');
+            const tabContents = tabContainer.querySelectorAll('.tab-content');
+            const tabHeaders = tabContainer.querySelectorAll('.tab-header');
+            
+            tabContents.forEach(content => content.classList.remove('active'));
+            tabHeaders.forEach(header => header.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            evt.target.classList.add('active');
+        }
+
+        function toggleCard(cardElement) {
+            cardElement.classList.toggle('active');
+        }
+
+        function changeSlideshowSlide(direction) {
+            const slides = document.querySelectorAll('.slideshow-slide');
+            slides[currentSlideshowSlide - 1].classList.remove('active');
+            
+            currentSlideshowSlide += direction;
+            const totalSlideshowSlides = slides.length;
+            
+            if (currentSlideshowSlide > totalSlideshowSlides) currentSlideshowSlide = 1;
+            if (currentSlideshowSlide < 1) currentSlideshowSlide = totalSlideshowSlides;
+            
+            slides[currentSlideshowSlide - 1].classList.add('active');
+        }
+
+        // ============================================
+        // COMMENTING SYSTEM
+        // ============================================
+
+        function toggleCommentMode() {
+            commentMode = !commentMode;
+            const toggleBtn = document.getElementById('comment-toggle');
+            
+            if (commentMode) {
+                toggleBtn.classList.add('active');
+                toggleBtn.innerHTML = '✓ Comments Enabled';
+                toggleCommentPanel(); // Open panel when enabling
+                setupTextSelection();
+            } else {
+                toggleBtn.classList.remove('active');
+                toggleBtn.innerHTML = '💬 Enable Comments';
+                removeTextSelection();
+            }
+        }
+
+        function toggleCommentPanel() {
+            const panel = document.getElementById('comment-panel');
+            panel.classList.toggle('open');
+        }
+
+        function setupTextSelection() {
+            document.addEventListener('mouseup', handleTextSelection);
+        }
+
+        function removeTextSelection() {
+            document.removeEventListener('mouseup', handleTextSelection);
+        }
+
+        function handleTextSelection(e) {
+            if (!commentMode) return;
+            
+            // Don't trigger if clicking on comment panel
+            if (e.target.closest('.comment-panel') || e.target.closest('.comment-mode-toggle')) {
+                return;
+            }
+
+            const selection = window.getSelection();
+            selectedText = selection.toString().trim();
+            
+            if (selectedText.length > 0) {
+                selectionRange = selection.getRangeAt(0);
+                showCommentInput();
+                
+                // Open panel if not already open
+                const panel = document.getElementById('comment-panel');
+                if (!panel.classList.contains('open')) {
+                    toggleCommentPanel();
+                }
+            }
+        }
+
+        function showCommentInput() {
+            const inputArea = document.getElementById('comment-input-area');
+            const textarea = document.getElementById('comment-textarea');
+            inputArea.style.display = 'block';
+            textarea.value = '';
+            textarea.focus();
+        }
+
+        function hideCommentInput() {
+            const inputArea = document.getElementById('comment-input-area');
+            inputArea.style.display = 'none';
+        }
+
+        function cancelComment() {
+            hideCommentInput();
+            window.getSelection().removeAllRanges();
+            selectedText = '';
+            selectionRange = null;
+        }
+
+        function submitComment() {
+            const textarea = document.getElementById('comment-textarea');
+            const commentText = textarea.value.trim();
+            
+            if (commentText === '') {
+                alert('Please enter a comment');
+                return;
+            }
+
+            const comment = {
+                id: Date.now(),
+                slideNumber: currentSlide,
+                highlightedText: selectedText,
+                comment: commentText,
+                timestamp: new Date().toISOString()
+            };
+
+            comments.push(comment);
+            saveComments();
+            renderComments();
+            hideCommentInput();
+            
+            // Clear selection
+            window.getSelection().removeAllRanges();
+            selectedText = '';
+            selectionRange = null;
+            
+            // Show success feedback
+            const submitBtn = document.querySelector('.submit-comment-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '✓ Added!';
+            submitBtn.style.background = 'linear-gradient(135deg, var(--health-green) 0%, #27ae60 100%)';
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.style.background = '';
+            }, 1500);
+        }
+
+        function renderComments() {
+            const commentsList = document.getElementById('comments-list');
+            const noCommentsMsg = document.getElementById('no-comments-msg');
+            
+            // Keep instructions banner
+            const instructionsBanner = commentsList.querySelector('.instructions-banner');
+            
+            if (comments.length === 0) {
+                noCommentsMsg.style.display = 'block';
+                // Clear everything except instructions and no-comments message
+                Array.from(commentsList.children).forEach(child => {
+                    if (!child.classList.contains('instructions-banner') && !child.classList.contains('no-comments')) {
+                        child.remove();
+                    }
+                });
+                return;
+            }
+
+            noCommentsMsg.style.display = 'none';
+            
+            // Clear existing comments but keep instructions
+            Array.from(commentsList.children).forEach(child => {
+                if (!child.classList.contains('instructions-banner') && !child.classList.contains('no-comments')) {
+                    child.remove();
+                }
+            });
+
+            // Sort comments by slide number
+            const sortedComments = [...comments].sort((a, b) => a.slideNumber - b.slideNumber);
+
+            sortedComments.forEach(comment => {
+                const commentItem = document.createElement('div');
+                commentItem.className = 'comment-item';
+                
+                const date = new Date(comment.timestamp);
+                const formattedDate = date.toLocaleString('en-US', { 
+                    month: 'short', 
+                    day: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+
+                commentItem.innerHTML = `
+                    <div class="comment-header">
+                        <span class="comment-slide-num">Slide ${comment.slideNumber}</span>
+                        <button class="comment-delete" onclick="deleteComment(${comment.id})" title="Delete comment">×</button>
+                    </div>
+                    ${comment.highlightedText ? `<div class="comment-highlight">"${comment.highlightedText}"</div>` : ''}
+                    <div class="comment-text">${comment.comment}</div>
+                    <div class="comment-timestamp">${formattedDate}</div>
+                `;
+                
+                commentsList.appendChild(commentItem);
+            });
+        }
+
+        function deleteComment(commentId) {
+            if (confirm('Are you sure you want to delete this comment?')) {
+                comments = comments.filter(c => c.id !== commentId);
+                saveComments();
+                renderComments();
+            }
+        }
+
+        function saveComments() {
+            localStorage.setItem('presentationComments', JSON.stringify(comments));
+        }
+
+        function loadComments() {
+            const saved = localStorage.getItem('presentationComments');
+            if (saved) {
+                comments = JSON.parse(saved);
+            }
+        }
+
+        function exportComments() {
+            if (comments.length === 0) {
+                alert('No comments to export');
+                return;
+            }
+
+            // Create formatted text export
+            let exportText = '='.repeat(60) + '\n';
+            exportText += 'PRESENTATION COMMENTS & FEEDBACK\n';
+            exportText += 'Health Care Systems and Coordinating Responses\n';
+            exportText += 'Lesson 2 of 8\n';
+            exportText += '='.repeat(60) + '\n\n';
+            exportText += `Total Comments: ${comments.length}\n`;
+            exportText += `Exported: ${new Date().toLocaleString()}\n`;
+            exportText += '='.repeat(60) + '\n\n';
+
+            const sortedComments = [...comments].sort((a, b) => a.slideNumber - b.slideNumber);
+
+            sortedComments.forEach((comment, index) => {
+                exportText += `COMMENT ${index + 1}\n`;
+                exportText += '-'.repeat(60) + '\n';
+                exportText += `Slide Number: ${comment.slideNumber}\n`;
+                exportText += `Date: ${new Date(comment.timestamp).toLocaleString()}\n`;
+                if (comment.highlightedText) {
+                    exportText += `Highlighted Text: "${comment.highlightedText}"\n`;
+                }
+                exportText += `\nComment:\n${comment.comment}\n`;
+                exportText += '\n' + '='.repeat(60) + '\n\n';
+            });
+
+            // Create and download file
+            const blob = new Blob([exportText], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `presentation-comments-${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+
+            // Show success feedback
+            const exportBtn = document.querySelector('.export-comments-btn');
+            const originalText = exportBtn.textContent;
+            exportBtn.textContent = '✓ Exported!';
+            setTimeout(() => {
+                exportBtn.textContent = originalText;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
